@@ -3,12 +3,22 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/styles.css" rel="stylesheet" />
+  <link href="manifest.json" rel="manifest" />
+  <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+
+  <!-- iOS meta tags and icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Heroes">
+  <link rel="apple-touch-icon" href="icons/152.png">
+  <meta name="description" content="Heroes">
+  <meta name="theme-color" content="#FFFFFF" />
 
   <title>Heroes App</title>
-
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -17,15 +27,25 @@
   </header>
 
   <main class="container">
-    <div id="resultados" class="row load">
 
-      <div class="col-6 col-md-3">
-        <div class="card_hero">
-          <div class="info_hero">
-            <h3>TESTE</h3>
-            <span class="badge rounded-pill bg-alert-poke">TESTE</span>
+    <div class="row">
+
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <img src="img/hero.jpg" class="card-img-top" />
+          <div class="card-body">
+            <h5 class="card-title">3-D Man</h5>
+            <h4>
+              <span class="badge bg-danger">Quadrinhos 4</span>
+              <span class="badge bg-dark">Séries 10</span>
+              <span class="badge bg-secondary">Histórias 50</span>
+            </h4>
+            <p><strong>Modificado: 29/04/2014</strong></p>
+            <p class="card-text">Sem descrição</p>
+            <div class="d-grid gap-2">
+              <button class="btn btn-dark" type="button">Detalhes</button>
+            </div>
           </div>
-          <img src="" class="img_hero" />
         </div>
       </div>
 
@@ -36,6 +56,7 @@
         <button class="btn btn-outline-secondary" id="btnLoadMore" type="button">Ver mais</button>
       </div>
     </div>
+
   </main>
 
   <footer class="container-fluid fixed-bottom">
