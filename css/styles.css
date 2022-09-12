@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'Marvel';
+    src: url('Marvel-Regular.eot');
+    src: local('Marvel'), local('Marvel-Regular'),
+        url('Marvel-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Marvel-Regular.woff2') format('woff2'),
+        url('Marvel-Regular.woff') format('woff'),
+        url('Marvel-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Marvel';
+    src: url('Marvel-Italic.eot');
+    src: local('Marvel Italic'), local('Marvel-Italic'),
+        url('Marvel-Italic.eot?#iefix') format('embedded-opentype'),
+        url('Marvel-Italic.woff2') format('woff2'),
+        url('Marvel-Italic.woff') format('woff'),
+        url('Marvel-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Marvel';
+    src: url('Marvel-BoldItalic.eot');
+    src: local('Marvel Bold Italic'), local('Marvel-BoldItalic'),
+        url('Marvel-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Marvel-BoldItalic.woff2') format('woff2'),
+        url('Marvel-BoldItalic.woff') format('woff'),
+        url('Marvel-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Marvel';
+    src: url('Marvel-Bold.eot');
+    src: local('Marvel Bold'), local('Marvel-Bold'),
+        url('Marvel-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Marvel-Bold.woff2') format('woff2'),
+        url('Marvel-Bold.woff') format('woff'),
+        url('Marvel-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+header {
+    background: green;
+    height: 120px;
+    background: #FFFFFF;
+    background: -moz-linear-gradient(top, #FFFFFF 0%, #FFFFFF 80%, #FFFFFF 100%);
+    background: -webkit-linear-gradient(top, #FFFFFF 0%, #FFFFFF 80%, #FFFFFF 100%);
+    background: linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 80%, #ffffff00 100%);
+}
+
+main {
+    margin-top: 135px;
+    margin-bottom: 60px;
+}
+
+footer {
+    background: #ededed;
+    padding: 15px;
+    min-height: 60px;
+}
+
+#btnLoadMore {
+    margin-bottom: 30px;
+}
+
+.title_logo {
+    font-family: 'Marvel', sans-serif;
+    height: 120px;
+    font-size: 2.4em;
+    margin-top: 40px;
+    margin-left: 10px;
+}
+
+.logo_home {
+    position: absolute;
+    width: 155px;
+    right: -47px;
+    top: -30px;
+}
+
+.card_hero {
+    background: #d4d6d5;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: 70px 20px;
+    width: 100%;
+    height: 120px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.info_hero {
+    z-index: 9;
+    position: relative;
+    width: 50%;
+}
+
+.info_hero h3 {
+    color: white;
+    font-size: 1rem;
+}
+
+.info_hero2 h1 {
+    color: white;
+    font-size: 2rem;
+}
+
+.info_hero2 h2 {
+    width: 150px;
+    display: inline-block;
+}
+
+.btn-material {
+    position: absolute;
+    bottom: 40px;
+    right: 50%;
+    margin-right: -24px;
+    border-radius: 24px;
+    width: 48px;
+    height: 48px;
+    background: #6b76e1;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.img_hero{
+    width: 70px;
+    position: absolute;
+    right: 4px;
+    bottom: 1px;
+}
