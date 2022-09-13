@@ -93,3 +93,11 @@ footer {
     overflow: hidden;
     width: 100%;
 }
+
+.load-icon {
+    width: 100%;
+    height: 50vh;
+    background: url('../img/load.gif') no-repeat center;
+    position: relative;
+    float: left;
+}
