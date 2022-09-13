@@ -67,7 +67,7 @@ function cache() {
 
 card = function ({ thumbnail, name, description, urls }) {
     return `      
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 col-sm">
         <div class="card">
           <img src="${thumbnail.path + "." + thumbnail.extension}" class="card-img-top" />
           <div class="card-body">
