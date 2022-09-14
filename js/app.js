@@ -34,9 +34,6 @@ function carregar_hero() {
             count_hero += count;
             heroes_json = data_json.data.results;
 
-            console.log(data_json.data.total)
-            console.log(count)
-            console.log(count_hero)
             if (count_hero == data_json.data.total) {
                 loadArea.style.display = "none";
             } else {
