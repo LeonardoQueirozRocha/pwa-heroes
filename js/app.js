@@ -74,7 +74,7 @@ card = function ({ thumbnail, name, description, urls }) {
             <h5 class="card-title">${name}</h5>
             <p class="card-text">${description || "Description not found"}</p>
             <div class="d-grid gap-2">
-              <a class="btn btn-dark" target="_blank" rel="noopener noreferrer" href="${urls.find(d => d.type === "detail").url}">See more</a>
+              <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
             </div>
           </div>
         </div>
