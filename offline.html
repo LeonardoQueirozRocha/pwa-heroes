@@ -42,22 +42,119 @@
       </div>
 
     </div>
-
-
-    <!-- <div class="row" id="load-area" style="display: none;">
-      <div id="col-12">
-        <div class="d-grid gap-2">
-          <button class="btn btn-outline-dark" id="btLoadMore" type="button" onclick="javascript:loadMore()">Load
-            more</button>
-        </div>
-      </div>
-    </div> -->
-
   </main>
 
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/app.js"></script>
-  
+  <script>
+    let heroes_json;
+    let count_hero = 0;
+    let count;
+    let fetch = 20;
+    let offset = 0;
+    let content = document.getElementById("content");
+    let loadArea = document.getElementById("load-area");
+    let btLoad = document.getElementById("btLoadMore");
+    let btInstall = document.getElementById("btnInstall");
+    let html_content = "";
+    let CACHE_DINAMICO = "heroes_dinamico";
+
+    function carregar_hero() {
+      heroes_json = JSON.parse(localStorage.getItem(CACHE_DINAMICO))
+      printCard();
+    }
+    
+    carregar_hero();
+
+    function printCard() {
+      content.innerHTML = "";
+
+      if (heroes_json.length > 0) {
+        showHero();
+      } else {
+        content.innerHTML = msg_alert("No hero found", "dark");
+      }
+    }
+
+    function showHero() {
+      for (let i = 0; i < count; i++) {
+        html_content += card(heroes_json[i])
+      }
+
+      content.innerHTML += html_content;
+    }
+
+    function loadMore() {
+      offset += fetch;
+      carregar_hero();
+    }
+
+    card = function ({ thumbnail, name, description, urls }) {
+
+      let botao = navegacao == true ? `            
+    <div class="d-grid gap-2">
+        <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
+    </div>` : "";
+
+      let path = navegacao == true ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
+
+      return `      
+    <div class="col-12 col-md-6 col-sm">
+        <div class="card">
+          <img src="${path}" class="card-img-top" />
+          <div class="card-body">
+            <h5 class="card-title">${name}</h5>
+            <p class="card-text">${description || "Description not found"}</p>
+            ${botao}
+          </div>
+        </div>
+    </div>`
+    }
+
+    msg_alert = function (msg, tipo) {
+      return `<div class="alert alert-${tipo}" role="alert">${msg}</div>`
+    }
+
+    var cache_dinamico_json = function () {
+      localStorage[CACHE_DINAMICO] = JSON.stringify(heroes_json);
+    }
+
+
+    let windowInstall = null;
+
+    window.addEventListener('beforeinstallprompt', callInstallWindow);
+
+    function callInstallWindow(evt) {
+      windowInstall = evt;
+    }
+
+    let initInstall = function () {
+
+      setTimeout(() => {
+        if (windowInstall != null) btInstall.removeAttribute("hidden");
+      }, 500);
+
+      btInstall.addEventListener("click", () => {
+        btInstall.setAttribute("hidden", true);
+        windowInstall.prompt();
+
+        windowInstall.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            console.log("Usuário fez a instalação do app");
+          } else {
+            console.log("Usuário NÃO fez a instalação do app");
+            btInstall.removeAttribute("hidden");
+          }
+        })
+      })
+    }
+
+    let navegacao = true;
+
+    window.addEventListener("load", (evt) => {
+      navigator.onLine ? navegacao = true : navegacao = false;
+    })
+  </script>
+
 </body>
 
 </html>
