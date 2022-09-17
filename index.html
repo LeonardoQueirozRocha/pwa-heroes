@@ -44,7 +44,7 @@
   </main>
 
   <footer class="container-fluid fixed-bottom">
-    <input type="button" value="Install App" id="btnInstall" class="btn btn-dark" />
+    <input type="button" value="Install App" hidden id="btnInstall" class="btn btn-dark" />
   </footer>
 
   <script src="js/bootstrap.bundle.min.js"></script>
@@ -57,6 +57,7 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker.register("service-worker.js").then((reg) => {
           swRegister = reg;
+          initInstall();
         })
       });
     }

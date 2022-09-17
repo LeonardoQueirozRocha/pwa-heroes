@@ -13,7 +13,9 @@ let offset = 0;
 let content = document.getElementById("content");
 let loadArea = document.getElementById("load-area");
 let btLoad = document.getElementById("btLoadMore");
+let btInstall = document.getElementById("btnInstall");
 let html_content = "";
+let CACHE_DINAMICO = "heroes_dinamico";
 
 function carregar_hero() {
 
@@ -40,6 +42,7 @@ function carregar_hero() {
                 loadArea.style.display = "block";
             }
 
+            cache_dinamico_json();
             printCard();
         }
     }
@@ -70,21 +73,23 @@ function loadMore() {
     carregar_hero();
 }
 
-function cache() {
-    console.log("fazendo cache")
-}
-
 card = function ({ thumbnail, name, description, urls }) {
+
+    let botao = navegacao == true ? `            
+    <div class="d-grid gap-2">
+        <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
+    </div>` : "";
+
+    let path = navegacao == true ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
+
     return `      
     <div class="col-12 col-md-6 col-sm">
         <div class="card">
-          <img src="${thumbnail.path + "." + thumbnail.extension}" class="card-img-top" />
+          <img src="${path}" class="card-img-top" />
           <div class="card-body">
             <h5 class="card-title">${name}</h5>
             <p class="card-text">${description || "Description not found"}</p>
-            <div class="d-grid gap-2">
-              <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
-            </div>
+            ${botao}
           </div>
         </div>
     </div>`
@@ -93,3 +98,43 @@ card = function ({ thumbnail, name, description, urls }) {
 msg_alert = function (msg, tipo) {
     return `<div class="alert alert-${tipo}" role="alert">${msg}</div>`
 }
+
+var cache_dinamico_json = function () {
+    localStorage[CACHE_DINAMICO] = JSON.stringify(heroes_json);
+}
+
+
+let windowInstall = null;
+
+window.addEventListener('beforeinstallprompt', callInstallWindow);
+
+function callInstallWindow(evt) {
+    windowInstall = evt;
+}
+
+let initInstall = function () {
+
+    setTimeout(() => {
+        if (windowInstall != null) btInstall.removeAttribute("hidden");
+    }, 500);
+
+    btInstall.addEventListener("click", () => {
+        btInstall.setAttribute("hidden", true);
+        windowInstall.prompt();
+
+        windowInstall.userChoice.then((choice) => {
+            if (choice.outcome === 'accepted') {
+                console.log("Usuário fez a instalação do app");
+            } else {
+                console.log("Usuário NÃO fez a instalação do app");
+                btInstall.removeAttribute("hidden");
+            }
+        })
+    })
+}
+
+let navegacao = true;
+
+window.addEventListener("load", (evt) => {
+    navigator.onLine ? navegacao = true : navegacao = false;
+})
