@@ -17,46 +17,34 @@ let btInstall = document.getElementById("btnInstall");
 let html_content = "";
 let CACHE_DINAMICO = "heroes_dinamico";
 
-let isOnline = true;
-
-window.addEventListener("load", (evt) => {
-    navigator.onLine ? isOnline = true : isOnline = false;
-})
-
 function carregar_hero() {
 
     var endpoint = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=${fetch}&offset=${offset}&ts=${ts}&apikey=${pubkey}&hash=${hash}`
 
-    console.log("online: " = isOnline);
-    if (isOnline) {
-        let ajax = new XMLHttpRequest();
+    let ajax = new XMLHttpRequest();
 
-        ajax.open("GET", endpoint, true);
-        ajax.send();
+    ajax.open("GET", endpoint, true);
+    ajax.send();
 
-        ajax.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+    ajax.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
 
-                var data_json = JSON.parse(this.responseText);
+            var data_json = JSON.parse(this.responseText);
 
-                offset = data_json.data.offset;
-                count = data_json.data.count;
-                count_hero += count;
-                heroes_json = data_json.data.results;
+            offset = data_json.data.offset;
+            count = data_json.data.count;
+            count_hero += count;
+            heroes_json = data_json.data.results;
 
-                if (count_hero == data_json.data.total) {
-                    loadArea.style.display = "none";
-                } else {
-                    loadArea.style.display = "block";
-                }
-
-                cache_dinamico_json();
-                printCard();
+            if (count_hero == data_json.data.total) {
+                loadArea.style.display = "none";
+            } else {
+                loadArea.style.display = "block";
             }
+
+            cache_dinamico_json();
+            printCard();
         }
-    } else {
-        heroes_json = JSON.parse(localStorage.getItem(CACHE_DINAMICO));
-        printCard();
     }
 }
 
@@ -86,22 +74,16 @@ function loadMore() {
 }
 
 card = function ({ thumbnail, name, description, urls }) {
-
-    let botao = isOnline ? `            
-    <div class="d-grid gap-2">
-        <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
-    </div>` : "";
-
-    let path = isOnline ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
-
     return `      
     <div class="col-12 col-md-6 col-sm">
         <div class="card">
-          <img src="${path}" class="card-img-top" />
+          <img src="${thumbnail.path}.${thumbnail.extension}" class="card-img-top" />
           <div class="card-body">
             <h5 class="card-title">${name}</h5>
             <p class="card-text">${description || "Description not found"}</p>
-            ${botao}
+            <div class="d-grid gap-2">
+                <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
+            </div>
           </div>
         </div>
     </div>`
@@ -114,7 +96,6 @@ msg_alert = function (msg, tipo) {
 var cache_dinamico_json = function () {
     localStorage[CACHE_DINAMICO] = JSON.stringify(heroes_json);
 }
-
 
 let windowInstall = null;
 
