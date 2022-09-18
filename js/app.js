@@ -17,34 +17,45 @@ let btInstall = document.getElementById("btnInstall");
 let html_content = "";
 let CACHE_DINAMICO = "heroes_dinamico";
 
+let isOffline = false;
+
+window.addEventListener("load", (evt) => {
+    !navigator.onLine ? isOffline = true : isOffline;
+})
+
 function carregar_hero() {
 
     var endpoint = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=${fetch}&offset=${offset}&ts=${ts}&apikey=${pubkey}&hash=${hash}`
 
-    let ajax = new XMLHttpRequest();
+    if (!isOffline) {
+        let ajax = new XMLHttpRequest();
 
-    ajax.open("GET", endpoint, true);
-    ajax.send();
+        ajax.open("GET", endpoint, true);
+        ajax.send();
 
-    ajax.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
 
-            var data_json = JSON.parse(this.responseText);
+                var data_json = JSON.parse(this.responseText);
 
-            offset = data_json.data.offset;
-            count = data_json.data.count;
-            count_hero += count;
-            heroes_json = data_json.data.results;
+                offset = data_json.data.offset;
+                count = data_json.data.count;
+                count_hero += count;
+                heroes_json = data_json.data.results;
 
-            if (count_hero == data_json.data.total) {
-                loadArea.style.display = "none";
-            } else {
-                loadArea.style.display = "block";
+                if (count_hero == data_json.data.total) {
+                    loadArea.style.display = "none";
+                } else {
+                    loadArea.style.display = "block";
+                }
+
+                cache_dinamico_json();
+                printCard();
             }
-
-            cache_dinamico_json();
-            printCard();
         }
+    } else {
+        heroes_json = JSON.parse(localStorage.getItem(CACHE_DINAMICO));
+        printCard();
     }
 }
 
@@ -74,13 +85,13 @@ function loadMore() {
 }
 
 card = function ({ thumbnail, name, description, urls }) {
-
-    let botao = navegacao == true ? `            
+    
+    let botao = !isOffline ? `            
     <div class="d-grid gap-2">
         <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
     </div>` : "";
 
-    let path = navegacao == true ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
+    let path = !isOffline ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
 
     return `      
     <div class="col-12 col-md-6 col-sm">
@@ -132,9 +143,3 @@ let initInstall = function () {
         })
     })
 }
-
-let navegacao = true;
-
-window.addEventListener("load", (evt) => {
-    navigator.onLine ? navegacao = true : navegacao = false;
-})
