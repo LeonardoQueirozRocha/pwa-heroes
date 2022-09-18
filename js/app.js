@@ -17,17 +17,18 @@ let btInstall = document.getElementById("btnInstall");
 let html_content = "";
 let CACHE_DINAMICO = "heroes_dinamico";
 
-let isOffline = false;
+let isOnline = true;
 
 window.addEventListener("load", (evt) => {
-    !navigator.onLine ? isOffline = true : isOffline;
+    navigator.onLine ? isOnline = true : isOnline = false;
 })
 
 function carregar_hero() {
 
     var endpoint = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=${fetch}&offset=${offset}&ts=${ts}&apikey=${pubkey}&hash=${hash}`
 
-    if (!isOffline) {
+    console.log("online: " = isOnline);
+    if (isOnline) {
         let ajax = new XMLHttpRequest();
 
         ajax.open("GET", endpoint, true);
@@ -85,13 +86,13 @@ function loadMore() {
 }
 
 card = function ({ thumbnail, name, description, urls }) {
-    
-    let botao = !isOffline ? `            
+
+    let botao = isOnline ? `            
     <div class="d-grid gap-2">
         <a class="btn btn-dark" href="${urls.find(d => d.type === "detail").url}">See more</a>
     </div>` : "";
 
-    let path = !isOffline ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
+    let path = isOnline ? `${thumbnail.path}.${thumbnail.extension}` : "img/no-img.png";
 
     return `      
     <div class="col-12 col-md-6 col-sm">
