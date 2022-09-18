@@ -48,6 +48,7 @@
   <script>
 
     let heroes_json;
+    let count_hero;
     let count;
     let fetch = 20;
     let offset = 0;
@@ -57,7 +58,16 @@
     let CACHE_DINAMICO = "heroes_dinamico";
 
     function carregar_hero() {
-      heroes_json = JSON.parse(localStorage.getItem(CACHE_DINAMICO));
+
+      var data_json = JSON.parse(localStorage.getItem(CACHE_DINAMICO));
+      console.log(data_json)
+
+      offset = data_json.data.offset;
+      count = data_json.data.count;
+      count_hero += count;
+      heroes_json = data_json.data.results;
+      console.log(heroes_json)
+
       printCard();
     }
 
@@ -81,14 +91,9 @@
       content.innerHTML += html_content;
     }
 
-    function loadMore() {
-      offset += fetch;
-      carregar_hero();
-    }
-
-    card = function ({ thumbnail, name, description, urls }) {
+    function card({ thumbnail, name, description, urls }) {
       return `      
-      <div class="col-12 col-md-6 col-sm">
+      <div class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch col-sm">
         <div class="card">
           <img src="img/no-img.png" class="card-img-top" />
           <div class="card-body">
@@ -99,7 +104,7 @@
       </div>`
     }
 
-    msg_alert = function (msg, tipo) {
+    function msg_alert(msg, tipo) {
       return `<div class="alert alert-${tipo}" role="alert">${msg}</div>`
     }
 

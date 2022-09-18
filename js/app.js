@@ -30,6 +30,7 @@ function carregar_hero() {
         if (this.readyState == 4 && this.status == 200) {
 
             var data_json = JSON.parse(this.responseText);
+            cache_dinamico_json(data_json);
 
             offset = data_json.data.offset;
             count = data_json.data.count;
@@ -42,7 +43,6 @@ function carregar_hero() {
                 loadArea.style.display = "block";
             }
 
-            cache_dinamico_json();
             printCard();
         }
     }
@@ -75,7 +75,7 @@ function loadMore() {
 
 card = function ({ thumbnail, name, description, urls }) {
     return `      
-    <div class="col-12 col-md-6 col-sm">
+    <div class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch col-sm">
         <div class="card">
           <img src="${thumbnail.path}.${thumbnail.extension}" class="card-img-top" />
           <div class="card-body">
@@ -93,8 +93,8 @@ msg_alert = function (msg, tipo) {
     return `<div class="alert alert-${tipo}" role="alert">${msg}</div>`
 }
 
-var cache_dinamico_json = function () {
-    localStorage[CACHE_DINAMICO] = JSON.stringify(heroes_json);
+function cache_dinamico_json(json) {
+    localStorage[CACHE_DINAMICO] = JSON.stringify(json);
 }
 
 let windowInstall = null;
